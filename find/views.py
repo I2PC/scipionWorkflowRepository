@@ -76,36 +76,13 @@ def workflow_detail(request, id, slug, jsonFlag=False):
                'find/detail.html', _dict)
 
 def workflow_search(request, jsonFlag=False):
-    print("workflow_search")
-    if 'byName' in request.POST:
-        print("byName")
-        slug = slugify(request.POST.get('key', ''))
-        try:
-            workflow = WorkFlow.objects.get(slug=slug)
-            found = True
-            error = "No error"
-        except ObjectDoesNotExist:
-            workflow = None
-            found = False
-            error = "There is no workflow with name %s" % (slug)
-
-        _dict = {'workflow': workflow,
-                 'result': found,
-                 'error': error,
-                 'RECAPTCHA_PUBLIC_KEY': settings.RECAPTCHA_PUBLIC_KEY,
-        }
-        if jsonFlag:
-            return HttpResponse(json.dumps(_dict),
-                                content_type="application/json")
-        else:
-            return render(request,
-                   'find/detail.html', _dict)
-
-    elif 'byKeyWord' in request.POST:
-        print("byKeyWord")
+    
+    if 'byKeyWord' in request.POST:
         key = request.POST.get('key', '')
         query = Q(keywords__icontains=key)
         query.add(Q(description__icontains=key), Q.OR)
+        query.add(Q(name__icontains=key), Q.OR)
+
         categories = Category.objects.all()
         workflows = WorkFlow.objects.filter(query).order_by('-downloads',"-views", "name")
         if workflows.exists():
@@ -127,7 +104,7 @@ def workflow_search(request, jsonFlag=False):
             return render(request,
                    'find/list.html', _dict)
     else:
-        print("Horro no POST request")
+        print("Horror: no POST request")
 
 # get workflow and incement counter
 def workflow_download(request, id, slug):

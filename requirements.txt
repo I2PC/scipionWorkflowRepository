@@ -9,8 +9,8 @@ gunicorn==19.7.1
 idna==2.6
 loremipsum==1.0.5
 Pillow==5.0.0  # pillo is for images, not sure we need it her
-psycopg2==2.7.4  # this is only needed for heroku
-psycopg2-binary==2.7.4i # this is only needed for heroku
+#psycopg2==2.7.4  # this is only needed for heroku
+#psycopg2-binary==2.7.4i # this is only needed for heroku
 pytz==2018.3
 requests==2.18.4
 selenium==3.11.0  # selenium is for testing, not needed in production server

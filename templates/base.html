@@ -34,8 +34,7 @@
                 <form action="{% url "find:workflow_search"%}" method="post">
                       Search Workflow <input type="text" name="key" maxlength="128">
                     {% csrf_token %}
-                    <input type="submit" name="byName" value="by Name">
-                    <input type="submit" name="byKeyWord" value="by Key Word">
+                    <input type="submit" name="byKeyWord" value="Find">
                 </form>
         </div>
         {% endblock %}
